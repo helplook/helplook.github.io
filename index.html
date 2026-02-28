@@ -1,1 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpLook AI知识库系统 - 零代码搭建企业智能知识库与AI问答机器人</title>
+    <meta name="description" content="HelpLook是专业的一站式AI知识库搭建系统，帮助企业零代码快速搭建AI知识库、帮助中心与企业博客。集成ChatGPT AI搜索，定制专属AI问答机器人，提升客户服务体验。">
+    <meta name="keywords" content="HelpLook,AI知识库,知识管理系统,企业知识库,AI问答机器人,智能搜索,零代码建站,帮助中心搭建">
+    <meta name="author" content="HelpLook">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://helplook.github.io/">
+    <meta property="og:title" content="HelpLook AI知识库系统 - 零代码搭建企业智能知识库">
+    <meta property="og:description" content="快速搭建AI知识库、帮助中心与企业博客，集成ChatGPT AI搜索与智能问答机器人">
+    <meta property="og:image" content="https://helplook.github.io/assets/og-image.jpg">
 
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://helplook.github.io/">
+    <meta property="twitter:title" content="HelpLook AI知识库系统">
+    <meta property="twitter:description" content="零代码搭建企业AI知识库与智能问答机器人">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://helplook.github.io/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#7C3AED',
+                        accent: '#06B6D4',
+                        dark: '#0F172A',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .hero-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient-x 15s ease infinite;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        }
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "HelpLook AI知识库系统",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CNY"
+        },
+        "description": "一站式AI知识库搭建系统，支持零代码快速搭建企业知识库、帮助中心与AI问答机器人",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "10000"
+        }
+    }
+    </script>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-50 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect border-b border-gray-200/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-lg">H</div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">HelpLook</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-primary transition-colors font-medium">核心功能</a>
+                    <a href="#solutions" class="text-gray-600 hover:text-primary transition-colors font-medium">解决方案</a>
+                    <a href="#cases" class="text-gray-600 hover:text-primary transition-colors font-medium">客户案例</a>
+                    <a href="https://share.helplook.net/boss123" target="_blank" rel="noopener noreferrer" class="px-6 py-2 bg-primary text-white rounded-full font-medium hover:bg-primary/90 transition-all transform hover:scale-105 shadow-lg hover:shadow-primary/30">
+                        免费试用
+                    </a>
+                </div>
+                
+                <button class="md:hidden p-2 rounded-lg hover:bg-gray-100" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#features" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">核心功能</a>
+                <a href="#solutions" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">解决方案</a>
+                <a href="#cases" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50">客户案例</a>
+                <a href="https://share.helplook.net/boss123" target="_blank" class="block px-3 py-2 mt-4 text-center rounded-md text-base font-medium bg-primary text-white hover:bg-primary/90">立即开始</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 hero-gradient opacity-10"></div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%239C92AC%22%20fill-opacity%3D%220.05%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-purple-400/30 rounded-full blur-xl animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-cyan-400/30 rounded-full blur-xl animate-float" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/4 w-24 h-24 bg-pink-400/20 rounded-full blur-xl animate-float" style="animation-delay: 4s;"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 shadow-sm mb-8 animate-pulse-slow">
+                <span class="flex h-2 w-2 rounded-full bg-green-500 mr-2"></span>
+                <span class="text-sm font-medium text-gray-600">已为 10,000+ 企业提供知识管理服务</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
+                <span class="block text-gray-900 mb-2">构建您的</span>
+                <span class="gradient-text">AI 智能知识库</span>
+            </h1>
+            
+            <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-600 leading-relaxed">
+                零代码快速搭建企业知识库、帮助中心与博客。集成 ChatGPT AI 搜索，<br class="hidden md:block">
+                定制专属 AI 问答机器人，让知识管理更智能、更高效。
+            </p>
+            
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="https://share.helplook.net/boss123" target="_blank" rel="noopener noreferrer" class="group relative px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl hover:shadow-primary/40 transition-all transform hover:-translate-y-1 overflow-hidden">
+                    <span class="relative z-10 flex items-center gap-2">
+                        免费开始使用
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </a>
+                <a href="#features" class="px-8 py-4 bg-white text-gray-700 border-2 border-gray-200 rounded-full font-semibold text-lg hover:border-primary hover:text-primary transition-all transform hover:-translate-y-1 shadow-md hover:shadow-lg">
+                    了解更多功能
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-900">10k+</div>
+                    <div class="text-sm text-gray-500 mt-1">企业用户</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-900">50%</div>
+                    <div class="text-sm text-gray-500 mt-1">客服减负</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-900">20+</div>
+                    <div class="text-sm text-gray-500 mt-1">语言支持</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-900">30s</div>
+                    <div class="text-sm text-gray-500 mt-1">快速搭建</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-gray-400"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-base text-primary font-semibold tracking-wide uppercase">核心功能</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    一站式 AI 知识库解决方案
+                </p>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                    从内容创建到智能问答，HelpLook 提供完整的知识管理工具链
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"></div>
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                        <i data-lucide="bot" class="w-7 h-7 text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">AI 问答机器人</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        基于 ChatGPT 技术，定制企业专属 AI 助手。支持多轮对话，自动捕捉关键词，7×24小时为客户提供即时准确的答案。
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/20 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"></div>
+                    <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
+                        <i data-lucide="search" class="w-7 h-7 text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">智能语义搜索</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        集成 OpenAI、文心一言、豆包等大模型，理解用户真实意图。支持口语化提问，精准定位所需知识内容。
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/20 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"></div>
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
+                        <i data-lucide="file-text" class="w-7 h-7 text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">零代码编辑器</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        所见即所得的富文本编辑器，支持 Markdown、富媒体嵌入。自动保存，版本控制，让内容创作 effortless。
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"></div>
+                    <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-orange-200 transition-colors">
+                        <i data-lucide="shield" class="w-7 h-7 text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">细粒度权限管理</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        支持公开、密码、授权登录、混合访问等多种模式。可为特定用户配置栏目和文章查看权限，确保敏感信息安全。
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/20 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"></div>
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-200 transition-colors">
+                        <i data-lucide="globe" class="w-7 h-7 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">多语言 & 自定义域名</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        支持 20+ 种语言一键翻译，自定义品牌域名与界面风格。完美适配企业品牌形象，助力全球化业务拓展。
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="card-hover bg-gray-50 rounded-2xl p-8 border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-500/20 to-transparent rounded-bl-full transform translate-x-8 -translate-y-8 group-hover:translate-x-6 group-hover:-translate-y-6 transition-transform"></div>
+                    <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-pink-200 transition-colors">
+                        <i data-lucide="bar-chart-3" class="w-7 h-7 text-pink-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">数据分析洞察</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        实时监测搜索热词、访客量、点击率等关键指标。AI 生成 SEO 关键词与描述，优化搜索引擎排名，获取自然流量。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-24 bg-gray-50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-white to-gray-50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div class="mb-12 lg:mb-0">
+                    <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-6">
+                        适用于多种业务场景<br>
+                        <span class="text-primary">助力企业数字化转型</span>
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8">
+                        无论是客户自助服务、内部知识管理，还是企业博客搭建，HelpLook 都能提供专业的解决方案。
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mt-1">
+                                <i data-lucide="headphones" class="w-6 h-6 text-primary"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">客户支持中心</h4>
+                                <p class="mt-1 text-gray-600">搭建产品帮助中心与 FAQ，减轻客服 50% 工作量，提升客户满意度。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mt-1">
+                                <i data-lucide="building-2" class="w-6 h-6 text-secondary"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">企业内部知识库</h4>
+                                <p class="mt-1 text-gray-600">沉淀 SOP、培训资料与项目文档，打破信息孤岛，提升团队协作效率。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mt-1">
+                                <i data-lucide="rocket" class="w-6 h-6 text-accent"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="text-lg font-semibold text-gray-900">企业博客与官网</h4>
+                                <p class="mt-1 text-gray-600">自定义品牌域名与界面，发布产品动态与行业洞察，获取 SEO 流量。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <a href="https://share.helplook.net/boss123" target="_blank" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl">
+                            开始免费试用
+                            <i data-lucide="external-link" class="ml-2 w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-lg opacity-30"></div>
+                    <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+                        <div class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <div class="ml-4 text-sm text-gray-500">HelpLook 工作台</div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center space-x-4 pb-4 border-b border-gray-100">
+                                <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                                    <i data-lucide="message-circle" class="w-5 h-5 text-primary"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="h-2 bg-gray-200 rounded w-3/4 mb-2"></div>
+                                    <div class="h-2 bg-gray-200 rounded w-1/2"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center space-x-3">
+                                        <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
+                                        <span class="text-sm font-medium text-gray-700">产品使用手册</span>
+                                    </div>
+                                    <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">已发布</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center space-x-3">
+                                        <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
+                                        <span class="text-sm font-medium text-gray-700">API 文档</span>
+                                    </div>
+                                    <span class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">草稿</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center space-x-3">
+                                        <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
+                                        <span class="text-sm font-medium text-gray-700">常见问题 FAQ</span>
+                                    </div>
+                                    <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">已发布</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <i data-lucide="sparkles" class="w-4 h-4 text-primary"></i>
+                                    <span class="text-sm font-semibold text-primary">AI 助手建议</span>
+                                </div>
+                                <p class="text-xs text-gray-600">根据近期搜索数据，建议补充"退款政策"相关文档，该关键词搜索量增长 45%。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cases/Trust Section -->
+    <section id="cases" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">受到众多企业信赖</h2>
+                <p class="mt-4 text-xl text-gray-500">从初创团队到大型企业，HelpLook 助力各类组织实现知识管理升级</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"HelpLook 帮助我们将客户咨询响应时间缩短了 70%，AI 机器人自动处理了大部分常见问题，客服团队可以专注于更复杂的需求。"</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white font-bold">L</div>
+                        <div class="ml-3">
+                            <div class="text-sm font-semibold text-gray-900">李明</div>
+                            <div class="text-sm text-gray-500">某 SaaS 公司客户总监</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"作为跨境电商，多语言功能对我们来说至关重要。HelpLook 的一键翻译让我们轻松服务全球客户，站点访问量提升了 3 倍。"</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center text-white font-bold">W</div>
+                        <div class="ml-3">
+                            <div class="text-sm font-semibold text-gray-900">王芳</div>
+                            <div class="text-sm text-gray-500">跨境电商运营经理</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">"零代码搭建真的太方便了！我们市场部小白用两天时间就搭建出了专业的帮助中心，而且 AI 搜索功能让员工找资料效率大幅提升。"</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center text-white font-bold">Z</div>
+                        <div class="ml-3">
+                            <div class="text-sm font-semibold text-gray-900">张伟</div>
+                            <div class="text-sm text-gray-500">科技企业市场总监</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-br from-primary via-secondary to-accent relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl mb-6">
+                准备好升级您的知识管理了吗？
+            </h2>
+            <p class="text-xl text-white/90 mb-10">
+                立即开始使用 HelpLook，30 秒快速搭建您的专属 AI 知识库<br>
+                无需信用卡，免费试用所有核心功能
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://share.helplook.net/boss123" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-white text-primary rounded-full font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform">
+                    免费开始使用
+                </a>
+                <a href="https://share.helplook.net/boss123" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all">
+                    查看官网详情
+                </a>
+            </div>
+            <p class="mt-6 text-sm text-white/80">
+                使用邀请码 <span class="font-mono font-bold bg-white/20 px-2 py-1 rounded">boss123</span> 解锁高级功能
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold">H</div>
+                        <span class="text-xl font-bold text-white">HelpLook</span>
+                    </div>
+                    <p class="text-gray-400 mb-4 max-w-sm">
+                        专业的一站式 AI 知识库搭建系统，帮助企业零代码快速构建智能知识库与 AI 问答机器人。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="github" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">产品功能</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">AI 问答机器人</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">智能搜索</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">知识库搭建</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">权限管理</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">数据分析</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">资源支持</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://share.helplook.net/boss123" target="_blank" class="hover:text-white transition-colors">帮助中心</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">使用文档</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">更新日志</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">
+                    &copy; 2026 helplook.github.io  All rights reserved.
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-500">
+                    <a href="#" class="hover:text-white transition-colors">隐私政策</a>
+                    <a href="#" class="hover:text-white transition-colors">服务条款</a>
+                    <a href="https://share.helplook.net/boss123" target="_blank" class="text-primary hover:text-primary/80 transition-colors">访问官网</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('glass-effect', 'bg-white/95');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('bg-white/95', 'glass-effect');
+            }
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all cards
+        document.querySelectorAll('.card-hover').forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
